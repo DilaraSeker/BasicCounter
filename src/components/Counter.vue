@@ -7,22 +7,60 @@
 </template>
 
 <script>
+
 export default {
   name: "Counter",
   data() {
     return {
-      count: 0
+      count: null,
     };
   },
   
   methods: {
     increment() {
-      this.count++;
+      //this.count++;
+
+      const requestOptions = {
+        method: "POST",
+        mode: 'cors',
+        headers: { "Content-Type":"application/json"},
+        body: JSON.stringify({ "operationType":"Increment"})
+      };
+      fetch("http://localhost:3000/counter", requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.error)
+        }
+        return response.json();
+        
+      })
+      .then(data => (this.count = data.counter));
     },
     decrement() {
-      this.count--;
-    }
+      //this.count--;
+      const requestOptions = {
+      method: "POST",
+      mode: 'cors',
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({ "operationType":"Decrement"})
+      };
+      fetch("http://localhost:3000/counter", requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.error)
+        }
+        return response.json();
+      })
+      .then(data => (this.count = data.counter));
+    },
+  },
+
+  created() {
+    fetch("http://localhost:3000/counter")
+    .then(response => response.json())
+    .then(data => (this.count = data.counter));
   }
+
 };
 </script>
 
