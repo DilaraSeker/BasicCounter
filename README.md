@@ -1,4 +1,5 @@
-# 1-basic-counter
+# BasicCounter
+A button and a for increase, a button for decrease the number on the screen.
 
 ## Project setup
 ```
